@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
 const cors = require("cors");
 const userRoute = require("./routes/users");
-const postRoute = require("./routes/users");
+const postRoute = require("./routes/posts");
 
 app.use(
     cors({
