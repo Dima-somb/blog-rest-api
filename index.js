@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const authRoute = require("./routes/auth")
-const cors = require("cors")
+const authRoute = require("./routes/auth");
+const cors = require("cors");
+const userRoute = require("./routes/users");
 
 app.use(
     cors({
@@ -11,10 +12,8 @@ app.use(
     })
 )
 
-
 dotenv.config();
 app.use(express.json());
-
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -22,6 +21,7 @@ mongoose.connect(process.env.MONGO_URL, {
     .catch((err) => console.log('err', err));
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 app.listen("5000", () => {
     console.log("Backend is running.");
