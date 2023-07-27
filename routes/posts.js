@@ -1,6 +1,21 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const multer = require("multer");
+const Image = require("../models/Image");
+
+// SET STORAGE
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'images');
+    },
+    filename: function (req, file, cb) {
+        const fileExtension = file.originalname.split('.').pop();
+        cb(null, `${file.fieldname}_${Date.now()}.${fileExtension}`);
+    }
+})
+
+const upload = multer({ storage })
 
 //CREATE POST
 router.post("/", async (req, res) => {
@@ -12,6 +27,24 @@ router.post("/", async (req, res) => {
         res.status(500).json(err);
     }
 });
+
+//
+router.post("/upload", upload.single('image'), async (req,res)=>{
+    try {
+        console.log('req: ', req.body.title);
+        console.log('file: ', req.file);
+        const newImage = new Image({
+            filename: req.file.filename,
+            path: req.file.path
+        })
+
+        await newImage.save();
+
+        res.status(201).json("Image uploaded successfully.")
+    } catch (err) {
+        console.error(err);
+    }
+})
 
 //UPDATE POST
 router.put("/:id", async (req, res) => {

@@ -1,17 +1,20 @@
-//const mongoose = require("../database");
+const mongoose = require('mongoose');
 
- const mongoose = require('mongoose');
-
-var imageSchema = new mongoose.Schema({
-    name: String,
-    desc: String,
-    img:
-        {
-            data: Buffer,
-            contentType: String
-        }
+const imageSchema = new mongoose.Schema({
+    filename: {
+        type: String,
+        required: true,
+    },
+    path: {
+        type: String,
+        required: true,
+    },
+    uploadedAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
-//Image is a model which has a schema imageSchema
+const Image = mongoose.model('Image', imageSchema);
 
-module.exports = new mongoose.model('Image', imageSchema);
+module.exports = Image;
