@@ -1,7 +1,7 @@
 ////USER CRUD
 
 //REGISTER
-    URL = localhost:5000/api/auth/login (POST)
+    URL = localhost:5000/api/auth/register (POST)
     require {
         "password",
         unique {
