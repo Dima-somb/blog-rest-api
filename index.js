@@ -48,10 +48,9 @@ app.use(bodyParser.json());
 
 // Set up multer for handling file uploads
 const storage = multer.diskStorage({
-    destination: './uploads/',
+    destination: './images/',
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+        cb(null, path.parse(file.originalname).name + path.extname(file.originalname));
     }
 });
 

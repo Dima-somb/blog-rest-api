@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Post = require("../models/Post");
 const multer = require("multer");
 const Image = require("../models/Image");
+const path = require("path");
 
 // SET STORAGE
 const storage = multer.diskStorage({
@@ -10,8 +11,7 @@ const storage = multer.diskStorage({
         cb(null, 'images');
     },
     filename: function (req, file, cb) {
-        const fileExtension = file.originalname.split('.').pop();
-        cb(null, `${file.fieldname}_${Date.now()}.${fileExtension}`);
+        cb(null, path.parse(file.originalname).name + path.extname(file.originalname));
     }
 })
 
